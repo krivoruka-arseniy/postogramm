@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main Chats</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'bars/styles.css' %}">
+</head>
+<body>
+    <div>
+        <h2>Чаты:</h2>
+        <button type="button">
+            <a href="add_chat">Добавить чат</a>
+        </button>
+        {% for i in user_chats %}
+        <br>
+        <div>
+            <p>Название: {{i.name}}</p>
+            <p>Владелец чата: {{i.owner_chat}}</p>
+            <form method="post">
+                {% csrf_token %}
+                <button name="button" value="{{i.pk}}" type="submit">В чат</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

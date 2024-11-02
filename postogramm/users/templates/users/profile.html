@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'bars/styles.css' %}">
+</head>
+<body>
+    <div>
+        <h2>Информация о вас:</h2>
+        <p>Ник: {{user.username}}</p>
+        <p>электронная почта: {{user.email}}</p>
+        <p>Ваш статус: {{user.user_status}}</p>
+    </div>
+    <br>
+    <div>
+        <h2>ваши бары:</h2>
+        <button type="button">
+            <a href="{% url 'bars:add_bar' %}">Добавить бар</a>
+        </button>
+        {% for i in user_bars %}
+        <br>
+        <div>
+            <img src="{{ i.img.url }}" alt="где фото?">
+            <p>Название: {{i.name}}</p>
+            <p>Описание: {{i.description}}</p>
+            <p>Категории:</p>
+            {% for cat in i.bar_category.all %}
+            {{cat}}<br>
+            {% endfor %}
+            {% if i.public == True %}
+            <p>Бар публичный</p>
+            {% else %}
+            <p>Бар не публичный</p>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <button name="pk_bar" value="{{i.pk}}" type="submit">Выполнить</button>
+                <select name="action_bar" id="action_bar">
+                    <option value="add_photo">Добавить фото</option>
+                    <option value="delete">Удалить</option>
+                </select>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

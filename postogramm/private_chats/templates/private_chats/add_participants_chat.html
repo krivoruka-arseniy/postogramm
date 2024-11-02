@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Participants chat</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'bars/styles.css' %}">
+</head>
+<body>
+    <div>
+        <h2>Участники чата</h2>
+        {% for i in chat.users.all %}
+        <br>
+        <div>
+            <p>{{i.username}}</p>
+            <form method="post">
+                {% csrf_token %}
+                <button name="button" value="{{i.pk}}" type="submit">Удалить</button>
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+    <br>
+    <div>
+        <h2>Добавить пользователя по имени:</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button name="button" value="add_user" type="submit">Добавить</button>
+        </form>
+    </div>
+</body>
+</html>

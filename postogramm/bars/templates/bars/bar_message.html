@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar message</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'bars/styles.css' %}">
+</head>
+<body>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button name="button" value="add_message" type="submit">Добавить</button>
+        </form>
+    </div>
+    <br>
+    {% for i in bar_message %}
+    <br>
+    <div>
+        <p>От: {{i.owner_message}}</p>
+        <p>Название: {{i.name}}</p>
+        <p>Описание: {{i.content}}</p>
+        <form method="post">
+            {% csrf_token %}
+            <button name="button" value="{{i.pk}}" type="submit">Удалить</button>
+        </form>
+    </div>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo bar</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'bars/styles.css' %}">
+</head>
+<body>
+    {% for i in photo_bar %}
+    <br>
+    <div>
+        <img src="{{i.img.url}}" alt="где фото?">
+        <p>Подпись к фотографии: {{i.name_img}}</p>
+    </div>
+    {% endfor %}
+</body>
+</html>

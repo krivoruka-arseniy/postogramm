@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'bars/styles.css' %}">
+</head>
+<body>
+    <div>
+        <p>Владелец бара: {{bar.owner_bar}}</p>
+        <img src="{{bar.img.url}}" alt="где фото?">
+        <p>Название: {{bar.name}}</p>
+        <p>Описание: {{bar.description}}</p>
+        <p>Категории:</p>
+        {% for cat in bar.bar_category.all %}
+        {{cat}}<br>
+        {% endfor %}
+    </div>
+    <br>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            <button type="button">
+                <a href="{% url 'bars:bar_chat' %}">Чат бара</a>
+            </button>
+            <button type="button">
+                <a href="{% url 'bars:photo_bar' %}">Фото бара</a>
+            </button>
+            <button type="submit">Скрыть</button>
+        </form>
+    </div>
+</body>
+</html>

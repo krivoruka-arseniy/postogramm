@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'bars/styles.css' %}">
+</head>
+<body>
+    <div>
+        <form method="post">
+            <select name="bar_category" id="bar_category">
+                <option value="1">весело посидеть</option>
+                <option value="2">много человек</option>
+                <option value="3">мало человек (не больше 4)</option>
+                <option value="4">необычные напитки</option>
+                <option value="5">для людей с широким кошельком</option>
+                <option value="6">для людей с маленьким кошельком</option>
+                <option value="all">все категории</option>
+            </select>
+            {% csrf_token %}
+            <button name="button" value="filter" type="submit">Отфильтровать</button>
+            <button type="button">
+                <a href="{% url 'users:profile' %}">Профиль</a>
+            </button>
+            <button type="button">
+                <a href="{% url 'private_chats:main_chats' %}">Приватные Чаты</a>
+            </button>
+            <button type="button">
+                <a href="{% url 'users:register' %}">Зарегистрироваться</a>
+            </button>
+        </form>
+    </div>
+    <br>
+    {% for i in bars %}
+    <br>
+    <div>
+        <img src="{{i.img.url}}" alt="где фото?">
+        <p>Название бара: {{i.name}}</p>
+        <p>Категории:</p>
+        {% for cat in i.bar_category.all %}
+        {{cat}}<br>
+        {% endfor %}
+        <form method="post">
+            {% csrf_token %}
+            <button name="button" value="{{i.pk}}" type="submit">Подробнее</button>
+        </form>
+    </div>
+    {% endfor %}
+</body>
+</html>

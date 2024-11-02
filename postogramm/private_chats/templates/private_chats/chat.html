@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'bars/styles.css' %}">
+</head>
+<body>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            <button name="button" value="delete_chat" type="submit">Удалить чат</button>
+            <button type="button">
+                <a href="add_participants_chat">Добавить участника</a>
+            </button>
+        </form>
+    </div>
+    <br>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <button name="button" value="add_message" type="submit">Добавить сообщение</button>
+            {{status}}
+        </form>
+    </div>
+    {% for i in messages %}
+    <br>
+    <div>
+        <p>От: {{i.owner_message}}</p>
+        <h3>{{i.name}}</h3>
+        <p>{{i.content}}</p>
+        <form method="post">
+            {% csrf_token %}
+            <button name="button" value="{{i.pk}}" type="submit">Удалить сообщение</button>
+        </form>
+    </div>
+    {% endfor %}
+</body>
+</html>
